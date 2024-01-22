@@ -1,6 +1,6 @@
 <template>
   <component :is="type" v-bind="linkProps(to)">
-    <slot />
+    <slot/>
   </component>
 </template>
 
@@ -8,30 +8,30 @@
 import { isExternal } from '@/utils/validate'
 
 export default {
-  props: {
+  props   : {
     to: {
-      type: String,
+      type    : String,
       required: true
     }
   },
   computed: {
     isExternal() {
-      return isExternal(this.to)
+      return isExternal (this.to)
     },
     type() {
-      if (this.isExternal) {
+      if ( this.isExternal ) {
         return 'a'
       }
       return 'router-link'
     }
   },
-  methods: {
+  methods : {
     linkProps(to) {
-      if (this.isExternal) {
+      if ( this.isExternal ) {
         return {
-          href: to,
+          href  : to,
           target: '_blank',
-          rel: 'noopener'
+          rel   : 'noopener'
         }
       }
       return {

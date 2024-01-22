@@ -1,14 +1,14 @@
 <script>
 export default {
-  name: 'MenuItem',
+  name      : 'MenuItem',
   functional: true,
-  props: {
-    icon: {
-      type: String,
+  props     : {
+    icon : {
+      type   : String,
       default: ''
     },
     title: {
-      type: String,
+      type   : String,
       default: ''
     }
   },
@@ -16,16 +16,16 @@ export default {
     const { icon, title } = context.props
     const vnodes = []
 
-    if (icon) {
-      if (icon.includes('el-icon')) {
-        vnodes.push(<i class={[icon, 'sub-el-icon']} />)
+    if ( icon ) {
+      if ( icon.includes ('el-icon') ) {
+        vnodes.push (<i class={[icon, 'sub-el-icon']}/>)
       } else {
-        vnodes.push(<svg-icon icon-class={icon}/>)
+        vnodes.push (<svg-icon icon-class={icon}/>)
       }
     }
 
-    if (title) {
-      vnodes.push(<span slot='title'>{(title)}</span>)
+    if ( title ) {
+      vnodes.push (<span slot="title">{(title)}</span>)
     }
     return vnodes
   }

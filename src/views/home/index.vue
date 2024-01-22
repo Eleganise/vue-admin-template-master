@@ -58,7 +58,7 @@
 
 export default {
   data: () => ({
-    show: true,
+    show : true,
     show2: true,
     show3: true
   })

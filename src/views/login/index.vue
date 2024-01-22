@@ -1,7 +1,8 @@
 <template>
   <div class="login-container">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" auto-complete="on" class="login-form"
-             label-position="left">
+             label-position="left"
+    >
 
       <div class="title-container">
         <h3 class="title">用户登录</h3>
@@ -9,41 +10,42 @@
 
       <el-form-item prop="username">
         <span class="svg-container">
-          <svg-icon icon-class="user" />
+          <svg-icon icon-class="user"/>
         </span>
         <el-input
-          ref="username"
-          v-model="loginForm.username"
-          auto-complete="on"
-          name="username"
-          placeholder="Username"
-          tabindex="1"
-          type="text"
+            ref="username"
+            v-model="loginForm.username"
+            auto-complete="on"
+            name="username"
+            placeholder="Username"
+            tabindex="1"
+            type="text"
         />
       </el-form-item>
 
       <el-form-item prop="password">
         <span class="svg-container">
-          <svg-icon icon-class="password" />
+          <svg-icon icon-class="password"/>
         </span>
         <el-input
-          :key="passwordType"
-          ref="password"
-          v-model="loginForm.password"
-          :type="passwordType"
-          auto-complete="on"
-          name="password"
-          placeholder="Password"
-          tabindex="2"
-          @keyup.enter.native="handleLogin"
+            :key="passwordType"
+            ref="password"
+            v-model="loginForm.password"
+            :type="passwordType"
+            auto-complete="on"
+            name="password"
+            placeholder="Password"
+            tabindex="2"
+            @keyup.enter.native="handleLogin"
         />
         <span class="show-pwd" @click="showPwd">
-          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"/>
         </span>
       </el-form-item>
 
       <el-button :loading="loading" style="width:100%;margin-bottom:30px;" type="primary"
-                 @click.native.prevent="handleLogin">Login
+                 @click.native.prevent="handleLogin"
+      >Login
       </el-button>
 
       <div class="tips">
@@ -56,42 +58,42 @@
 </template>
 
 <script>
-import {validUsername} from '@/utils/validate'
+import { validUsername } from '@/utils/validate'
 
 export default {
   name: 'Login',
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+      if ( !validUsername (value) ) {
+        callback (new Error ('Please enter the correct user name'))
       } else {
-        callback()
+        callback ()
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+      if ( value.length < 6 ) {
+        callback (new Error ('The password can not be less than 6 digits'))
       } else {
-        callback()
+        callback ()
       }
     }
     return {
-      loginForm: {
+      loginForm   : {
         username: 'admin',
         password: '111111'
       },
-      loginRules: {
-        username: [{required: true, trigger: 'blur', validator: validateUsername}],
-        password: [{required: true, trigger: 'blur', validator: validatePassword}]
+      loginRules  : {
+        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
-      loading: false,
+      loading     : false,
       passwordType: 'password',
-      redirect: undefined
+      redirect    : undefined
     }
   },
-  watch: {
+  watch  : {
     $route: {
-      handler: function (route) {
+      handler  : function(route) {
         this.redirect = route.query && route.query.redirect
       },
       immediate: true
@@ -99,27 +101,27 @@ export default {
   },
   methods: {
     showPwd() {
-      if (this.passwordType === 'password') {
+      if ( this.passwordType === 'password' ) {
         this.passwordType = ''
       } else {
         this.passwordType = 'password'
       }
-      this.$nextTick(() => {
-        this.$refs.password.focus()
+      this.$nextTick (() => {
+        this.$refs.password.focus ()
       })
     },
     handleLogin() {
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
+      this.$refs.loginForm.validate (valid => {
+        if ( valid ) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({path: this.redirect || '/'})
+          this.$store.dispatch ('user/login', this.loginForm).then (() => {
+            this.$router.push ({ path: this.redirect || '/' })
             this.loading = false
-          }).catch(() => {
+          }).catch (() => {
             this.loading = false
           })
         } else {
-          console.log('error submit!!')
+          console.log ('error submit!!')
           return false
         }
       })
